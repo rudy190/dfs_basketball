@@ -1,0 +1,153 @@
+# StageBoxScore config info
+boxscores_config = {'instance_template': {'sport': None,
+                                   'league_id': None,
+                                   'season': None,
+                                   'game_id': None,
+                                   'load_date': None,
+                                   'url': None,
+                                   'json': None,
+                                   'status_code': None,
+                                   'status_reason': None,
+                                   'processed': False,
+                                   'processed_date': None},
+             'rename_dict': {},
+             'date_fields': []}
+
+# StageGameSummary config info
+game_summary_config = {'instance_template': {'sport': None,
+                                      'league_id': None,
+                                      'season': None,
+                                      'game_id': None,
+                                      'load_date': None,
+                                      'url': None,
+                                      'json': None,
+                                      'status_code': None,
+                                      'status_reason': None,
+                                      'processed': False,
+                                      'processed_date': None},
+                'rename_dict': {},
+                'date_fields': []}
+
+# StagePeriodStarters config info
+period_starters_config = {'instance_template': {'sport': None,
+                                         'league_id': None,
+                                         'season': None,
+                                         'game_id': None,
+                                         'period': None,
+                                         'load_date': None,
+                                         'url': None,
+                                         'json': None,
+                                         'status_code': None,
+                                         'status_reason': None,
+                                         'processed': False,
+                                         'processed_date': None},
+                   'rename_dict': {},
+                   'date_fields': []}
+
+# StagePlayByPlay config info
+pbp_config = {'instance_template': {'sport': None,
+                             'league_id': None,
+                             'season': None,
+                             'game_id': None,
+                             'load_date': None,
+                             'url': None,
+                             'json': None,
+                             'status_code': None,
+                             'status_reason': None,
+                             'processed': False,
+                             'processed_date': None},
+       'rename_dict': {},
+       'date_fields': []}
+
+# StageSchedule config info
+schedule_config = {'instance_template': {'sport': None,
+                                  'league_id': None,
+                                  'season': None,
+                                  'date': None,
+                                  'load_date': None,
+                                  'url': None,
+                                  'json': None,
+                                  'status_code': None,
+                                  'status_reason': None,
+                                  'processed': False,
+                                  'processed_date': None},
+            'rename_dict': {},
+            'date_fields': []}
+
+# StageSeason config info
+season_config = {'instance_template': {'sport': None,
+                                'league_id': None,
+                                'season': None,
+                                'date_from': None,
+                                'date_to': None,
+                                'season_type': None,
+                                'load_date': None,
+                                'url': None,
+                                'json': None,
+                                'status_code': None,
+                                'status_reason': None,
+                                'processed': False,
+                                'processed_date': None},
+            'rename_dict': {},
+            'date_fields': []}
+
+# StageShotChart config info
+shot_chart_config = {'instance_template': {'sport': None,
+                                    'league_id': None,
+                                    'season': None,
+                                    'season_type': None,
+                                    'start_date': None,
+                                    'end_date': None,
+                                    'team_id': None,
+                                    'player_id': None,
+                                    'context': None,
+                                    'load_date': None,
+                                    'url': None,
+                                    'json': None,
+                                    'status_code': None,
+                                    'status_reason': None,
+                                    'processed': False,
+                                    'processed_date': None},
+            'rename_dict': {},
+            'date_fields': []}
+
+# StageWinProb config info
+win_prob_config = {'instance_template': {'sport': None,
+                                  'league_id': None,
+                                  'season': None,
+                                  'game_id': None,
+                                  'load_date': None,
+                                  'url': None,
+                                  'json': None,
+                                  'status_code': None,
+                                  'status_reason': None,
+                                  'processed': False,
+                                  'processed_date': None},
+            'rename_dict': {},
+            'date_fields': []}
+
+# StageRoster config info
+roster_config = {'instance_template': {'team_id': None,
+                                       'sport': None,
+                                       'season': None,
+                                       'load_date': None,
+                                       'url': None,
+                                       'json': None,
+                                       'status_code': None,
+                                       'status_reason': None,
+                                       'processed': False,
+                                       'processed_date': None},
+            'rename_dict': {},
+            'date_fields': []}
+
+# StagePlayer config info
+player_config = {'instance_template': {'player_id': None,
+                                       'load_date': None,
+                                       'url': None,
+                                       'json': None,
+                                       'status_code': None,
+                                       'status_reason': None,
+                                       'processed': False,
+                                       'processed_date': None},
+            'rename_dict': {},
+            'date_fields': []}
