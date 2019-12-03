@@ -1,0 +1,177 @@
+Rewards are the negative of the sum of the weighted mse from various boxscore stats:
+    1.) complete boxscore
+    2.) come up with weighted loss function that will provide the reward value
+        - individual team total pts gets most weight
+        - individual team total reb gets most weight
+        - individual team total assist gets most weight
+        - individual team total block gets most weight
+        - individual team total steal gets most weight
+        - individual team total turnover gets most weight
+        - individual player 3pt fgs pts gets 2nd most weight
+        - individual player 2pt fgs pts gets 3rd most weight
+        - individual player fts gets 3rd most weight
+        - individual player rebs gets 3rd most weight
+
+* include only 12 players from each team with most playing time in last 10 days or those returning from injury
+* include team as a player as well (coach events will hit team instead of having a coach too)
+
+Planned state variables
+
+1.) static game information:
+    - league type ind
+        - 3 x 26 x 26
+        - 1st matrix: 0 or 1 depending on if nba
+        - 2nd matrix: 0 or 1 depending on if wnba
+        - 3rd matrix: 0 or 1 depending on if g league
+    - season type ind
+        - 2 x 26 x 26
+        - 1st matrix: 0 or 1 depending on if regular season
+        - 2nd matrix: 0 or 1 depending on if post season
+    - (PENDING) favorite ind
+        - 1 x 26 x 26
+        - 1st matrix: 0 or 1 depending on if team is favorite
+    - average 7 day start
+        - 5 x 26 x 26
+        - range of 0 - 1 depending % started
+        - 1st matrix: game start percentage
+        - 2nd matrix: period 2 start percentage
+        - 3rd matrix: period 3 start percentage
+        - 4th matrix: period 4 start percentage
+        - 5th matrix: OT start percentage
+    - game starter ind
+        - 1 x 26 x 26
+        - 1st matrix: 0 or 1 depending on if starter
+    - position ind
+        - 3 x 26 x 26
+        - 1st matrix: 0 or 1 depending on if G
+        - 2nd matrix: 0 or 1 depending on if F
+        - 3rd matrix: 0 or 1 depending on if C
+    - (PENDING) line ind
+        - 2 x 26 x 26
+        - 1st matrix: 0 or 1 depending on if line 1
+        - 2nd matrix: 0 or 1 depending on if line 2
+    - home ind
+        - 1 x 26 x 26
+        - 1st matrix: 0 or 1 depending on if home
+    - average 7 day percentage of game played
+        - 1 x 26 x 26 for each day
+        - range from 0 - 1 depending on % played
+        - 1st matrix: percentage played
+
+2.) in-game information:
+    - period ind
+        - 5 x 26 x 26
+        - 1st matrix: 0 or 1 depending on if 1st period
+        - 2nd matrix: 0 or 1 depending on if 2nd period
+        - 3rd matrix: 0 or 1 depending on if 3rd period
+        - 4th matrix: 0 or 1 depending on if 4th period
+        - 5th matrix: 0 or 1 depending on if OT period
+    - seconds remaining on shot clock for each play
+        - 1 x 26 x 26
+        - range of values from 0 to 24 based on amount remaining in game
+        - 1st matrix: seconds remaining on shot clock
+    - percentage of period seconds remaining
+        - 1 x 26 x 26
+        - range from 0 - 1 depending on % seconds remaining
+        - 1st matrix: percentage remaining
+    - game score pt margin
+        - 1 x 26 x 26
+        - range of values from -15 to 15 based, clipped
+        - 1st matrix: scalar value
+    - offense indicator
+        - 1 x 26 x 26
+        - 1st matrix: 0 or 1 depending on if offensive team
+    - on court ind
+        - 1 x 26 x 26
+        - 1st matrix: 0 or 1 depending on if on court
+    - fouled out ind
+        - 1 x 26 x 26
+        - 1st matrix: 0 or 1 depending on if home
+    - ejected ind
+        - 1 x 26 x 26
+        - 1st matrix: 0 or 1 depending on if home
+    - prior play is period start ind
+        - 1 x 26 x 26
+        - 1st matrix: 0 or 1 depending on if home
+    - last 20 plays in game (all 0s if before first play of game)
+        - 20 x 26 x 26
+        - t matrix: 0 or 1 indicating the player actions at t - 1
+        - see 26 actions for the 26 players below
+        - each row represents an action type, each column represents a player
+
+3.) all players last 7 days stat timeseries:
+    - total of 42 x 26 x 26
+    - 7 x 26 x 26 for stats (0s if no data)
+        - each column represents a player or team
+        - each row represents a stat type (fg2a, fg2m, fg3a,... ), see below
+    - 7 x 26 x 26 for USG% (0s if no data)
+        - 26 x 26 for each day, with range from 0 - 1
+        - columns corresponding to a player will be all the same
+    - 7 x 26 x 26 for game start indicator (0s if no data)
+        - 26 x 26 for each day, with 0s or 1s if starter
+    - 7 x 26 x 26 for inactive indicator (0s if no data)
+        - 26 x 26 for each day, with 0s or 1s if inactive
+    - 7 x 26 x 26 for dnp coach indicator (0s if no data)
+        - 26 x 26 for each day, with 0s or 1s if coach dnp
+    - 7 x 26 x 26 for pre season indicator (0s if no data)
+        - 26 x 26 for each day, with 0s or 1s if game is pre season
+    - 7 x 26 x 26 for regular season indicator (0s if no data)
+        - 26 x 26 for each day, with 0s or 1s if game is regular season
+    - 7 x 26 x 26 for post season indicator (0s if no data)
+        - 26 x 26 for each day, with 0s or 1s if game is post season
+
+5.) player last 3 seasons stat variables:
+    - total of 6 x 26 x 26
+    - 3 x 26 x 26 for avg per game stats for each season (normalized values, 0s if no data)
+        - each column represents a player or team
+        - each row represents a stat type (fg2a, fg2m, fg3a,... ), see below
+    - 3 x 26 x 26 for percentage of game played for each season (0s if no data)
+        - each column represents a player or team
+        - each row represents a percentage of games played, with range from 0-1
+
+6.) player opponent allowed last 3 seasons stat variables:
+    - total of 6 x 26 x 26
+    - 3 x 26 x 26 for avg per game stats for each season (normalized values, 0s if no data)
+        - each column represents a player or team
+        - each row represents a stat type (fg2a, fg2m, fg3a,... ), see below
+    - 3 x 26 x 26 for percentage of game played for each season (0s if no data)
+        - each column represents a player or team
+        - each row represents a percentage of games played, with range from 0-1
+
+60 + 35 + 35 + 6 + 6 = 131 x 26 x 26
+
+88,556
+
+Use PPO as the algorithm, how to determine value function?
+
+action potentials:
+0 - 24: seconds expiring between plays
+0 - 675: 26 actions for each player in the game model (26 x 26 = 676)
+            * fg2a
+            * fg2m
+            * fg3a
+            * fg3m
+            * fta
+            * ftm
+            * ast
+            * blk
+            * oreb
+            * dreb
+            * tov
+            * stl
+            * pf_off
+            * pf_def
+            * pf_def_sf
+            * tech
+            * flag
+            * df
+            * df_sf
+            * df_off
+            * violation
+            * sub_out
+            * sub_in
+            * jump_part
+            * jump_poss
+            * ejection
+
+actions not reflected, but will be set by the model (period_start & period end)
